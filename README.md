@@ -1,1 +1,1 @@
-# ipad-clone
+# ipod-clone
