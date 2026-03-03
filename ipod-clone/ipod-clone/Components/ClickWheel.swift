@@ -24,7 +24,7 @@ struct ClickWheel: View {
                     Circle()
                         .fill(Color(.ipodBody))
                         .stroke(Color(.ipodScreenGlass), lineWidth: 0.35)
-                        .frame(width: d * 0.38, height: d * 0.38)
+                        .frame(width: d * 0.32, height: d * 0.32)
                 }
 
                 wheelButtons(diameter: d)
