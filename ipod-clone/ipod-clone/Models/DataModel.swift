@@ -7,21 +7,19 @@
 
 import Foundation
 
-
 struct Track: Identifiable, Equatable {
     var id: UUID
     var title: String
     var artist: String
     var albumTitle: String
     var duration: TimeInterval
-    
-    
+    var image: String
+
     var formattedDuration: String {
-        let durationInt = Int(self.duration.rounded())
+        let durationInt = Int(duration.rounded())
         let minutes = durationInt / 60
         let seconds = durationInt % 60
-        let durationString = String(format: "%02d:%02d", minutes, seconds)
-        return durationString
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 
@@ -29,10 +27,9 @@ struct PlayerState {
     var currentTrackId: UUID?
     var isPlaying: Bool
     var progress: TimeInterval
-    
 }
 
-struct MenuItem:Identifiable {
+struct MenuItem: Identifiable {
     var id: UUID
     var title: String
     var destination: Screen
