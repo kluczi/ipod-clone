@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IpodShellView: View {
     @EnvironmentObject var vm: IpodViewModel
-    
+
     var body: some View {
         ZStack {
             IpodFrame()
