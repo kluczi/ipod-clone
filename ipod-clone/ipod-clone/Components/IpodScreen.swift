@@ -11,7 +11,7 @@ struct IpodScreen: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
             .foregroundStyle(Color(.ipodScreenGlass))
-            .padding(.horizontal,16)
+            .padding(.horizontal, 16)
             .padding(.vertical, 32)
             .cornerRadius(12)
     }
