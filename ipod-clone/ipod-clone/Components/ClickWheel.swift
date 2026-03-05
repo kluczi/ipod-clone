@@ -22,8 +22,37 @@ struct ClickWheel: View {
                     print("main")
                 } label: {
                     Circle()
-                        .fill(Color(.ipodBody))
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    Color("ipodBodyUpperMid"),
+                                    Color("ipodBodyBase"),
+                                    Color("ipodBodyBottom"),
+                                ],
+                                center: .center,
+                                startRadius: 6,
+                                endRadius: 80
+                            )
+                        )
                         .stroke(Color(.ipodScreenGlass), lineWidth: 0.35)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black.opacity(0.35), lineWidth: 1)
+                        )
+                        .overlay(
+                            Circle()
+                                .fill(
+                                    RadialGradient(
+                                        colors: [
+                                            Color.white.opacity(0.1),
+                                            Color.clear,
+                                        ],
+                                        center: .init(x: 0.5, y: 0.25),
+                                        startRadius: 5,
+                                        endRadius: 60
+                                    )
+                                )
+                        )
                         .frame(width: d * 0.32, height: d * 0.32)
                 }
 
