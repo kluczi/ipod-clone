@@ -14,12 +14,14 @@ class IpodViewModel: ObservableObject {
     @Published var navigationStack: [Screen] = [.menu(selectedIndex: 0)]
     @Published var tracks: [Track]
     @Published var playerState: PlayerState
+    @Published var playbackService: PlaybackService
     let menuItems: [MenuItem]
 
-    init(tracks: [Track], playerState: PlayerState, menuItems: [MenuItem]) {
+    init(tracks: [Track], playerState: PlayerState, menuItems: [MenuItem], playbackService: PlaybackService) {
         self.tracks = tracks
         self.playerState = playerState
         self.menuItems = menuItems
+        self.playbackService = PlaybackService()
     }
 
     var currentScreen: Screen {
@@ -48,6 +50,7 @@ class IpodViewModel: ObservableObject {
         }
     }
 
+    
     func handleSelect() {
         switch currentScreen {
         case let .menu(selectedIndex: index):
@@ -58,14 +61,31 @@ class IpodViewModel: ObservableObject {
         case let .library(selectedIndex: index):
             guard tracks.indices.contains(index) else { return }
             let trackId = tracks[index].id
-            playerState.currentTrackId = trackId
-            playerState.isPlaying = true
-            playerState.progress = 0.0
-            navigationStack.append(.player(trackId: trackId))
-
+            /// checking wheter selected track is different from current playing track 
+            if(trackId != playerState.currentTrackId) {
+                playbackService.load(track: tracks[index])
+                playerState.currentTrackId = trackId
+                playerState.isPlaying = true
+                playerState.progress = 0.0
+                playbackService.play()
+            } else if (trackId == playerState.currentTrackId) {
+                playbackService.play()
+            }
         case .player:
             break
         }
+    }
+    
+    func handlePlayPause() {
+        if(playerState.isPlaying) {
+            playbackService.pause()
+        } else {
+            playbackService.play()
+        }
+    }
+    
+    func updateProgress() {
+        playerState.progress=playbackService.currentTime()
     }
 
     func handleMenu() {
