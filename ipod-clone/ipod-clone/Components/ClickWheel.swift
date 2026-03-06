@@ -71,7 +71,7 @@ struct ClickWheel: View {
             Button {
                 print("menu")
             } label: {
-                Text("MENU")
+                Image(systemName: "square.grid.2x2")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(.ipodWheelText))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
