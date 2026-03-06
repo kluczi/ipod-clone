@@ -17,7 +17,8 @@ struct NowPlayingScreenView: View {
         let seconds = Int(progress.rounded()) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
-
+    
+    //format time left
     var timeLeft: String {
         let minutesDuration = Int(track.duration.rounded()) / 60
         let secondsDuration = Int(track.duration.rounded()) % 60
