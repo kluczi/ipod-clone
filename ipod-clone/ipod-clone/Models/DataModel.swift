@@ -11,9 +11,10 @@ struct Track: Identifiable, Equatable {
     var id: UUID
     var title: String
     var artist: String
-    var albumTitle: String
+    var album: String
     var duration: TimeInterval
     var image: String
+    var fileName: String
 
     var formattedDuration: String {
         let durationInt = Int(duration.rounded())
@@ -23,8 +24,19 @@ struct Track: Identifiable, Equatable {
     }
 }
 
+struct Album: Identifiable, Equatable {
+    var id: UUID
+    var title: String
+    var image: String
+}
+
+struct Artist: Identifiable, Equatable {
+    var id: UUID
+    var name: String
+}
+
 struct PlayerState {
-    var currentTrackId: UUID?
+    var currentTrackId: UUID
     var isPlaying: Bool
     var progress: TimeInterval
 }
