@@ -7,22 +7,25 @@
 
 import SwiftUI
 
-struct ListRow<Trailing:View>: View {
+struct ListRow<Trailing: View>: View {
     let title: String
     let subtitle: String?
     let leadingImage: String?
     let isSelected: Bool
     @ViewBuilder let trailing: () -> Trailing
-    
+
     var titleColor: Color {
-        isSelected ? .titleSelected:.titlePrimary
+        isSelected ? .titleSelected : .titlePrimary
     }
+
     var subtitleColor: Color {
         isSelected ? .subTitleSelected : .subTitlePrimary
     }
+
     var backgroundColor: Color {
-        isSelected ? .rowBackgroundSelected:.rowBackground
+        isSelected ? .rowBackgroundSelected : .rowBackground
     }
+
     var body: some View {
         HStack {
             if let leadingImage {
@@ -31,7 +34,7 @@ struct ListRow<Trailing:View>: View {
                     .frame(width: 64, height: 64)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
             }
-            
+
             VStack(alignment: .leading) {
                 Text(title)
                     .foregroundStyle(titleColor)
@@ -44,7 +47,6 @@ struct ListRow<Trailing:View>: View {
             Spacer()
             trailing()
                 .foregroundStyle(titleColor)
-
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
@@ -53,5 +55,5 @@ struct ListRow<Trailing:View>: View {
 }
 
 #Preview {
-    ListRow(title: "fml .", subtitle: "fakemink", leadingImage: "placeholder", isSelected: false){}
+    ListRow(title: "fml .", subtitle: "fakemink", leadingImage: "placeholder", isSelected: false) {}
 }

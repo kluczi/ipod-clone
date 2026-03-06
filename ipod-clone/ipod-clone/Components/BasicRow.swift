@@ -12,9 +12,7 @@ struct BasicRow: View {
     var isSelected: Bool
     var body: some View {
         ListRow(title: item.title, subtitle: nil, leadingImage: nil, isSelected: isSelected) {
-            Button {
-                
-            } label: {
+            Button {} label: {
                 Image(systemName: "chevron.right")
             }
         }
@@ -22,7 +20,7 @@ struct BasicRow: View {
 }
 
 #Preview {
-    let example = MenuItem (
+    let example = MenuItem(
         id: UUID(),
         title: "Library",
         destination: .library(selectedIndex: 1)
