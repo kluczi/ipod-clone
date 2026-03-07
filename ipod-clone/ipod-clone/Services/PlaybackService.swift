@@ -8,8 +8,10 @@
 import AVFoundation
 import Combine
 
+
 final class PlaybackService {
     private var player: AVPlayer
+    private var timeObserver: Any?
 
     init() {
         self.player=AVPlayer()
@@ -38,6 +40,22 @@ final class PlaybackService {
     
     func currentTime() -> TimeInterval {
         player.currentTime().seconds
+    }
+    
+    func startTimeObserver(onUpdate: @escaping (TimeInterval) -> Void) {
+        let interval = CMTime(seconds: 0.25, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+
+        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
+            let seconds = time.seconds
+            onUpdate(seconds)
+        }
+    }
+    
+    func stopTimeObserver() {
+        if let observer = timeObserver {
+            player.removeTimeObserver(observer)
+            timeObserver = nil
+        }
     }
     
     

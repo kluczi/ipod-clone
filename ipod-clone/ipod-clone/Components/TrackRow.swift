@@ -22,9 +22,10 @@ struct TrackRow: View {
         id: UUID(),
         title: "fml .",
         artist: "fakemink",
-        albumTitle: "The Boy who cried Terrified.",
+        album: "The Boy who cried Terrified.",
         duration: 163,
-        image: "placeholder"
+        image: "placeholder",
+        fileName: ""
     )
     TrackRow(track: example, isSelected: true)
 }

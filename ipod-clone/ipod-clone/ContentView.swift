@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var vm: IpodViewModel = IpodViewModel()
     var body: some View {
         IpodShellView()
+            .environmentObject(vm)
     }
+        
 }
 
 #Preview {

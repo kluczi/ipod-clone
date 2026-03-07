@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ClickWheel: View {
+    @EnvironmentObject var vm: IpodViewModel
     private let ringThickness: CGFloat = 28
     var body: some View {
         GeometryReader { geo in
@@ -17,9 +18,10 @@ struct ClickWheel: View {
                 Circle()
                     .fill(Color(.ipodWheel))
                     .frame(width: d - ringThickness * 2, height: d - ringThickness * 2)
+                    
 
                 Button {
-                    print("main")
+                    vm.handleSelect()
                 } label: {
                     Circle()
                         .fill(
@@ -69,7 +71,7 @@ struct ClickWheel: View {
         let inset = d * 0.12
         ZStack {
             Button {
-                print("menu")
+                vm.handleLibrary()
             } label: {
                 Image(systemName: "square.grid.2x2")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
@@ -80,9 +82,9 @@ struct ClickWheel: View {
             .buttonStyle(.plain)
 
             Button {
-                print("pause")
+                vm.handlePlayPause()
             } label: {
-                Image(systemName: "playpause.fill")
+                Image(systemName: "playpause")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(.ipodWheelText))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
@@ -93,7 +95,7 @@ struct ClickWheel: View {
             Button {
                 print("next")
             } label: {
-                Image(systemName: "backward.end.alt.fill")
+                Image(systemName: "backward.end.alt")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(.ipodWheelText))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -102,9 +104,9 @@ struct ClickWheel: View {
             .buttonStyle(.plain)
 
             Button {
-                print("last")
+                vm.handleNext()
             } label: {
-                Image(systemName: "forward.end.alt.fill")
+                Image(systemName: "forward.end.alt")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(.ipodWheelText))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
@@ -117,4 +119,5 @@ struct ClickWheel: View {
 
 #Preview {
     ClickWheel()
+        .environmentObject(IpodViewModel())
 }

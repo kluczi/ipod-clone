@@ -10,39 +10,39 @@ import Combine
 
 struct NowPlayingScreenView: View {
     let track: Track
-    @State var progress: Double = 16 // in sec
-    
+    @EnvironmentObject var vm: IpodViewModel
+
+
     var formattedProgress: String {
-        let minutes = Int(progress.rounded()) / 60
-        let seconds = Int(progress.rounded()) % 60
+        let minutes = Int(vm.playerState.progress.rounded()) / 60
+        let seconds = Int(vm.playerState.progress.rounded()) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
     
     //format time left
     var timeLeft: String {
-        let minutesDuration = Int(track.duration.rounded()) / 60
-        let secondsDuration = Int(track.duration.rounded()) % 60
-        let minutesProgress = Int(progress.rounded()) / 60
-        let secondsProgress = Int(progress.rounded()) % 60
+        let secondsLeft = Int(track.duration.rounded()-vm.playerState.progress.rounded())
 
-        let minutesLeft = minutesDuration - minutesProgress
-        let secondsLeft = secondsDuration - secondsProgress
+        let minutes = secondsLeft / 60
+        let seconds = secondsLeft % 60
 
-        return String(format: "- %02d:%02d", minutesLeft, secondsLeft)
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 
     var fraction: Double {
         guard track.duration > 0 else { return 0 }
-        return min(max(progress / track.duration, 0), 1)
+        return min(max(vm.playerState.progress / track.duration, 0), 1)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            TrackMetaData(title: track.title, artist: track.artist, album: track.albumTitle, art: track.image)
+        ZStack {
+            VStack(alignment: .leading, spacing: 16) {
+                TrackMetaData(title: track.title, artist: track.artist, album: track.album, art: track.image)
 
-            ProgressBar(progress: $progress, fraction: fraction, formattedProgress: formattedProgress, timeLeft: timeLeft)
-            
-            Details()
+                ProgressBar(progress: vm.playerState.progress, fraction: fraction, formattedProgress: formattedProgress, timeLeft: timeLeft)
+                
+                Details()
+            }
         }
         .padding(16)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -60,7 +60,7 @@ struct NowPlayingScreenView: View {
 }
 
 private struct ProgressBar: View {
-    @Binding var progress: Double
+    var progress: TimeInterval
     var fraction: Double
     var formattedProgress: String
     var timeLeft: String
@@ -71,7 +71,7 @@ private struct ProgressBar: View {
                     .foregroundStyle(.tertiaryText)
                     .font(.system(size: 18, weight: .regular))
                 Spacer()
-                Text(timeLeft)
+                Text("- "+timeLeft)
                     .foregroundStyle(.tertiaryText)
                     .font(.system(size: 18, weight: .regular))
             }
@@ -104,18 +104,18 @@ private struct BlendedArtwork: View {
         ZStack {
             Image(art)
                 .resizable()
-                .scaledToFill()
                 .frame(width: 196, height: 196)
                 .blur(radius: 28)
-                .scaleEffect(1.15)
+                .scaleEffect(0.5)
                 .opacity(0.45)
+            
             Image(art)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 196, height: 196)
                 .clipShape(Rectangle())
         }
-        .frame(width: 196, height: 196)
+//        .frame(width: .infinity, height: .infinity)
     }
 }
 
@@ -161,6 +161,8 @@ private struct Details: View {
             Text(audioRoute.deviceName)
                 .foregroundStyle(.tertiaryText)
                 .font(.system(size: 18, weight: .regular))
+            
+            Spacer()
 
         }
     }
@@ -170,25 +172,28 @@ private struct Details: View {
 
 
 #Preview {
-    let example = Track(
-        id: UUID(),
-        title: "fml .",
-        artist: "fakemink",
-        albumTitle: "The Boy who cried Terrified .",
-        duration: 163,
-        image: "placeholder"
-    )
-    
-    let example2 = Track(
-        id: UUID(),
-        title: "Good Days",
-        artist: "SZA",
-        albumTitle: "SOS",
-        duration: 163,
-        image: "placeholder2"
-    )
-    NowPlayingScreenView(track: example2)
-//    PreviewWrapper()
+//    let example = Track(
+//        id: UUID(),
+//        title: "fml .",
+//        artist: "fakemink",
+//        album: "The Boy who cried Terrified .",
+//        duration: 163,
+//        image: "placeholder",
+//        fileName: ""
+//    )
+//    
+//    let example2 = Track(
+//        id: UUID(),
+//        title: "Good Days",
+//        artist: "SZA",
+//        album: "SOS",
+//        duration: 163,
+//        image: "placeholder2",
+//        fileName: ""
+//    )
+    NowPlayingScreenView(track: IpodViewModel().tracks.first!)
+        .environmentObject(IpodViewModel())
+////    PreviewWrapper()
 }
 
 

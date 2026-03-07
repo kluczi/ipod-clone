@@ -38,10 +38,11 @@ struct ListRow<Trailing: View>: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .foregroundStyle(titleColor)
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                 if let subtitle {
                     Text(subtitle)
                         .foregroundStyle(subtitleColor)
+                        .fontWeight(.regular)
                 }
             }
             Spacer()

@@ -12,8 +12,8 @@ struct IpodScreen: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundStyle(Color(.ipodScreenGlass))
+//            RoundedRectangle(cornerRadius: 12)
+//                .foregroundStyle(Color(.ipodScreenGlass))
 
 
             screenContent
@@ -36,8 +36,8 @@ struct IpodScreen: View {
         case .library:
             LibraryScreenView()
 
-        case .player(let trackId):
-            if let track = vm.tracks.first(where: { $0.id == trackId }) {
+        case .player(let fileName):
+            if let track = vm.tracks.first(where: { $0.fileName == fileName }) {
                 NowPlayingScreenView(track: track)
             } else {
                 Text("Track not found")
@@ -48,36 +48,39 @@ struct IpodScreen: View {
 }
 
 #Preview {
-    IpodScreenPreview()
+    IpodScreen()
+        .environmentObject(IpodViewModel())
+//    IpodScreenPreview()
 }
 
-private struct IpodScreenPreview: View {
-    var body: some View {
-        IpodScreen()
-            .environmentObject(previewVM)
-    }
-
-    private var previewVM: IpodViewModel {
-        let track = Track(
-            id: UUID(),
-            title: "Good Days",
-            artist: "SZA",
-            albumTitle: "SOS",
-            duration: 163,
-            image: "placeholder2"
-        )
-
-        let vm = IpodViewModel(
-            tracks: [track],
-            playerState: PlayerState(
-                currentTrackId: track.id,
-                isPlaying: true,
-                progress: 16
-            ),
-            menuItems: []
-        )
-
-        vm.navigationStack = [.player(trackId: track.id)]
-        return vm
-    }
-}
+//private struct IpodScreenPreview: View {
+//    var body: some View {
+//        IpodScreen()
+//            .environmentObject(previewVM)
+//    }
+//
+//    private var previewVM: IpodViewModel {
+//        let track = Track(
+//            id: UUID(),
+//            title: "Good Days",
+//            artist: "SZA",
+//            albumTitle: "SOS",
+//            duration: 163,
+//            image: "placeholder2",
+//            fileName: ""
+//        )
+//
+//        let vm = IpodViewModel(
+//            tracks: [track],
+//            playerState: PlayerState(
+//                currentTrackFileName: "",
+//                isPlaying: true,
+//                progress: 16
+//            ),
+//            menuItems: []
+//        )
+//
+//        vm.navigationStack = [.player(trackId: track.id)]
+//        return vm
+//    }
+//}
