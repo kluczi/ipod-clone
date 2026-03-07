@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct Track: Identifiable, Equatable {
-    var id: UUID
+
+struct Track: Identifiable, Equatable, Decodable {
+    var id: UUID /// in this case this field is UI identity
     var title: String
     var artist: String
     var album: String
     var duration: TimeInterval
     var image: String
-    var fileName: String
+    var fileName: String /// track identity
 
     var formattedDuration: String {
         let durationInt = Int(duration.rounded())
@@ -36,7 +37,7 @@ struct Artist: Identifiable, Equatable {
 }
 
 struct PlayerState {
-    var currentTrackId: UUID
+    var currentTrackFileName: String
     var isPlaying: Bool
     var progress: TimeInterval
 }
@@ -50,5 +51,5 @@ struct MenuItem: Identifiable {
 enum Screen {
     case library(selectedIndex: Int)
     case menu(selectedIndex: Int)
-    case player(trackId: UUID)
+    case player(trackFileName: String)
 }
