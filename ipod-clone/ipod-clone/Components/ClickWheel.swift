@@ -93,7 +93,7 @@ struct ClickWheel: View {
             .buttonStyle(.plain)
 
             Button {
-                print("next")
+                vm.handlePrevious()
             } label: {
                 Image(systemName: "backward.end.alt")
                     .font(.system(size: d * 0.06, weight: .semibold, design: .rounded))
