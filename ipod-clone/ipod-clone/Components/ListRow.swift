@@ -31,6 +31,7 @@ struct ListRow<Trailing: View>: View {
             if let leadingImage {
                 Image(leadingImage)
                     .resizable()
+                    .scaledToFill()
                     .frame(width: 64, height: 64)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
             }
