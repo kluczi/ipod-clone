@@ -104,7 +104,7 @@ private struct BlendedArtwork: View {
         ZStack {
             Image(art)
                 .resizable()
-                .frame(width: 196, height: 196)
+                .frame(width: 164, height: 164)
                 .blur(radius: 28)
                 .scaleEffect(0.5)
                 .opacity(0.45)
@@ -112,7 +112,7 @@ private struct BlendedArtwork: View {
             Image(art)
                 .resizable()
                 .scaledToFill()
-                .frame(width: 196, height: 196)
+                .frame(width: 164, height: 164)
                 .clipShape(Rectangle())
         }
 //        .frame(width: .infinity, height: .infinity)
@@ -126,14 +126,18 @@ private struct TrackMetaData: View {
     var art: String
 
     var body: some View {
-        HStack (alignment: .top, spacing: 16) {
+        HStack (alignment: .top, spacing: 10) {
                 BlendedArtwork(art: art)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.system(size: 28, weight: .semibold))
                         .foregroundStyle(.primaryText)
-                        .lineLimit(1)
+                        .lineLimit(2)
+//                        .frame(height: 34, alignment: .topLeading)
+                        .minimumScaleFactor(0.75)
+                        .allowsTightening(true)
+
                     Text(artist)
                         .font(.system(size: 22, weight: .regular))
                         .foregroundStyle(.secondaryText)
@@ -142,7 +146,11 @@ private struct TrackMetaData: View {
                         .font(.system(size: 22, weight: .regular))
                         .foregroundStyle(.tertiaryText)
                         .lineLimit(2)
+                        .frame(height: 34, alignment: .topLeading)
+                        .minimumScaleFactor(0.5)
+                        .allowsTightening(true)
                 }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
                 .padding(.vertical, 12)
             }
         .frame(maxWidth: .infinity, alignment: .leading)
