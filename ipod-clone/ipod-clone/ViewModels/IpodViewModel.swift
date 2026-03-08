@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 // routing+vm
 
@@ -99,7 +100,9 @@ class IpodViewModel: ObservableObject {
         }
         playerState.currentTrackFileName = ""
         playerState.progress = 0
-        navigationStack[navigationStack.count - 1] = .library(selectedIndex: 0)
+        withAnimation(.easeInOut(duration: 0.5)) {
+            navigationStack[navigationStack.count - 1] = .library(selectedIndex: 0)
+        }
         
     }
     
@@ -116,7 +119,9 @@ class IpodViewModel: ObservableObject {
             playerState.currentTrackFileName = tracks[newIndex].fileName
             playerState.progress=0
             playbackService.load(track: tracks[newIndex])
-            navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+            withAnimation(.easeInOut(duration: 0.5)) {
+                navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+            }
         case .menu(selectedIndex: _):
             break
         }
@@ -139,7 +144,9 @@ class IpodViewModel: ObservableObject {
                     playerState.currentTrackFileName = tracks[newIndex].fileName
                     playerState.progress=0
                     playbackService.load(track: tracks[newIndex])
-                    navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+                    }
                 } else {
                     playerState.progress=0
                     playbackService.load(track: tracks[currentIndex])
@@ -170,7 +177,9 @@ class IpodViewModel: ObservableObject {
 
     func handleMenu() {
         if navigationStack.count > 1 {
-            navigationStack.removeLast()
+            withAnimation(.easeInOut(duration: 0.5)) {
+                navigationStack.removeLast()
+            }
         }
     }
 }
