@@ -16,36 +16,20 @@
         "fileName": "KILLY - Killamonjaro"
     },
     {
-        "title": "The Mercer .",
-        "artist": "fakemink",
-        "album": "The Boy who cried Terrified .",
-        "duration": 95.11,
-        "image": "placeholder",
-        "fileName": "fakemink - The Mercer ."
+        "title": "Low",
+        "artist": "SZA",
+        "album": "SOS",
+        "duration": 182.67,
+        "image": "placeholder2",
+        "fileName": "SZA - Low (Audio)"
     },
     {
-        "title": "9",
-        "artist": "Drake",
-        "album": "Views",
-        "duration": 286.54,
-        "image": "placeholder4",
-        "fileName": "Drake - 9"
-    },
-    {
-        "title": "No Pole",
-        "artist": "Don Toliver",
-        "album": "Love Sick",
-        "duration": 187.74,
-        "image": "placeholder5",
-        "fileName": "Don Toliver - No Pole [Official Visualizer]"
-    },
-    {
-        "title": "Praise God",
-        "artist": "Kanye West",
-        "album": "Donda",
-        "duration": 226.77,
-        "image": "placeholder6",
-        "fileName": "Kanye West - Praise God (Audio)"
+        "title": "Low",
+        "artist": "SZA",
+        "album": "SOS",
+        "duration": 182.67,
+        "image": "placeholder2",
+        "fileName": "SZA - Low (Audio)"
     },
 
 ]
