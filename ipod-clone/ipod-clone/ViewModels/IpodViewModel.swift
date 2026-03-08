@@ -126,18 +126,29 @@ class IpodViewModel: ObservableObject {
         switch currentScreen {
         case .library(let selectedIndex):
             let newIndex = selectedIndex-1
-            if(newIndex < tracks.count) {
+            if(newIndex < 0) {
+                navigationStack[navigationStack.count - 1] = .library(selectedIndex: selectedIndex)
+            } else {
                 navigationStack[navigationStack.count - 1] = .library(selectedIndex: newIndex)
             }
         case .player(let trackFileName):
             guard let currentIndex = indexOfCurrentTrack(trackFileName: trackFileName) else { return }
             let newIndex = currentIndex-1
-            if(newIndex < tracks.count) {
-                playerState.currentTrackFileName = tracks[newIndex].fileName
+            if(newIndex >= 0) {
+                if(playerState.progress <= 3) {
+                    playerState.currentTrackFileName = tracks[newIndex].fileName
+                    playerState.progress=0
+                    playbackService.load(track: tracks[newIndex])
+                    navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+                } else {
+                    playerState.progress=0
+                    playbackService.load(track: tracks[currentIndex])
+                }
+            } else if (newIndex < 0) {
                 playerState.progress=0
-                playbackService.load(track: tracks[newIndex])
-                navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
+                playbackService.load(track: tracks[0])
             }
+            
         case .menu(selectedIndex: _):
             break
         }
