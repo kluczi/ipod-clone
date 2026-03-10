@@ -30,8 +30,8 @@ struct IpodScreen: View {
     @ViewBuilder
     private var screenContent: some View {
         switch vm.currentScreen {
-        case .menu:
-            MenuScreenView()
+//        case .menu:
+//            MenuScreenView()
 
         case .library:
             LibraryScreenView()
