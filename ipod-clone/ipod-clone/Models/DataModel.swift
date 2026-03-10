@@ -40,6 +40,7 @@ struct PlayerState {
     var currentTrackFileName: String
     var isPlaying: Bool
     var progress: TimeInterval
+    var mode: PlayingMode
 }
 
 struct MenuItem: Identifiable {
@@ -50,6 +51,11 @@ struct MenuItem: Identifiable {
 
 enum Screen {
     case library(selectedIndex: Int)
-    case menu(selectedIndex: Int)
+//    case menu(selectedIndex: Int)
     case player(trackFileName: String)
+}
+
+enum PlayingMode: Equatable {
+    case shuffle
+    case queue
 }
