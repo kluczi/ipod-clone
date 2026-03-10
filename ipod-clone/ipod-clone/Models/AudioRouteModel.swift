@@ -34,7 +34,6 @@ final class AudioRouteModel: ObservableObject {
         deviceName = output.portName
 
         let name = output.portName.lowercased()
-
         if name.contains("airpods max") {
             deviceIcon = "airpodsmax"
         } else if name.contains("airpods") {
