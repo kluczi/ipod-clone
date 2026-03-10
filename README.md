@@ -1,6 +1,6 @@
 # iPod Modern Clone
 
-Modern iPod-style music player UI built with **SwiftUI**, featuring a click wheel, library browser, and now-playing screen with animated transitions and shuffle/queue modes.
+Modern iPod-style music player built with **SwiftUI**, featuring a click wheel, library browser, and now-playing screen with animated transitions and shuffle/queue modes.
 
 ## Features
 
