@@ -48,7 +48,7 @@ ipod-clone/
    │  ├─ LibraryService.swift          # loads tracks from JSON
    │  └─ PlaybackService.swift         # AVFoundation-backed playback
    ├─ ViewModels/
-   │  └─ IpodViewModel.swift           # routing, click wheel handling, playback + shuffle/queue
+   │  └─ IpodViewModel.swift           # routing, buttons handling, playback + shuffle/queue
    ├─ MockData/
    │  └─ MockData.swift                # sample/mock data
    ├─ Assets.xcassets/                 # album artwork placeholders and UI assets
