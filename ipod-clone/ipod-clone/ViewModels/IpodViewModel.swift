@@ -27,14 +27,18 @@ class IpodViewModel: ObservableObject {
         self.libraryService = libraryService
         self.playbackService = PlaybackService()
         self.navigationStack = [.library(selectedIndex: 0)]
-        self.playerState = PlayerState(currentTrackFileName: "", isPlaying: false, progress: 0)
+        self.playerState = PlayerState(currentTrackFileName: "", isPlaying: false, progress: 0, mode: .queue)
         self.menuItems = []
         self.tracks = tracks
 
     }
 
     var currentScreen: Screen {
-        navigationStack.last ?? .menu(selectedIndex: 0)
+        navigationStack.last ?? .library(selectedIndex: 0)
+    }
+    
+    var currentMode: PlayingMode {
+        playerState.mode
     }
 
     /// func to handle routing
@@ -48,11 +52,11 @@ class IpodViewModel: ObservableObject {
             let clampedIndex = min(max(0, newIndex), tracks.count - 1)
             navigationStack[navigationStack.count - 1] = .library(selectedIndex: clampedIndex)
 
-        case let .menu(selectedIndex):
-            guard !menuItems.isEmpty else { return }
-            let newIndex = selectedIndex + delta
-            let clampedIndex = min(max(0, newIndex), menuItems.count - 1)
-            navigationStack[navigationStack.count - 1] = .menu(selectedIndex: clampedIndex)
+//        case let .menu(selectedIndex):
+//            guard !menuItems.isEmpty else { return }
+//            let newIndex = selectedIndex + delta
+//            let clampedIndex = min(max(0, newIndex), menuItems.count - 1)
+//            navigationStack[navigationStack.count - 1] = .menu(selectedIndex: clampedIndex)
 
         case .player:
             break
@@ -66,10 +70,10 @@ class IpodViewModel: ObservableObject {
     
     func handleSelect() {
         switch currentScreen {
-        case let .menu(selectedIndex: index):
-            guard menuItems.indices.contains(index) else { return }
-            let destination = menuItems[index].destination
-            navigationStack.append(destination)
+//        case let .menu(selectedIndex: index):
+//            guard menuItems.indices.contains(index) else { return }
+//            let destination = menuItems[index].destination
+//            navigationStack.append(destination)
             
         case let .library(selectedIndex: index):
             guard tracks.indices.contains(index) else { return }
@@ -106,6 +110,33 @@ class IpodViewModel: ObservableObject {
         
     }
     
+    func randomTrackIndex(excluding excludedIndex: Int) -> Int? {
+        guard tracks.count > 1 else {return nil}
+        let avalaibleIndeces = tracks.indices.filter {$0 != excludedIndex}
+        return avalaibleIndeces.randomElement()
+    }
+    
+    func handleTrackSwitchIndex() -> Int? {
+        guard let currentIndex=indexOfCurrentTrack(trackFileName: playerState.currentTrackFileName) else {return nil}
+        let newIndex: Int
+        switch playerState.mode {
+        case .shuffle:
+            newIndex = randomTrackIndex(excluding: currentIndex) ?? 0
+        case .queue:
+            newIndex = currentIndex+1
+        }
+        return newIndex
+    }
+    
+    func handleShuffle() {
+        switch currentMode {
+        case .shuffle:
+            playerState.mode = .queue
+        case .queue:
+            playerState.mode = .shuffle
+        }
+    }
+    
     func handleNext() {
         switch currentScreen {
         case .library(let selectedIndex):
@@ -113,17 +144,24 @@ class IpodViewModel: ObservableObject {
             if(newIndex < tracks.count) {
                 navigationStack[navigationStack.count - 1] = .library(selectedIndex: newIndex)
             }
-        case .player(let trackFileName):
-            guard let currentIndex = indexOfCurrentTrack(trackFileName: trackFileName) else { return }
-            let newIndex = currentIndex+1
-            playerState.currentTrackFileName = tracks[newIndex].fileName
-            playerState.progress=0
-            playbackService.load(track: tracks[newIndex])
+        case .player:
+//            guard let currentIndex = indexOfCurrentTrack(trackFileName: trackFileName) else { return }
+            guard let newIndex = handleTrackSwitchIndex() else {return}
+            if(newIndex < tracks.count) {
+                playerState.currentTrackFileName = tracks[newIndex].fileName
+                playerState.progress=0
+                playbackService.load(track: tracks[newIndex])
+            } else {
+                playerState.mode = .shuffle
+                guard let shuffleIndex = handleTrackSwitchIndex() else {return}
+                
+                playerState.currentTrackFileName = tracks[shuffleIndex].fileName
+                playerState.progress=0
+                playbackService.load(track: tracks[shuffleIndex])
+            }
             withAnimation(.easeInOut(duration: 0.5)) {
                 navigationStack[navigationStack.count - 1] = .player(trackFileName: playerState.currentTrackFileName)
             }
-        case .menu(selectedIndex: _):
-            break
         }
     }
     
@@ -156,18 +194,20 @@ class IpodViewModel: ObservableObject {
                 playbackService.load(track: tracks[0])
             }
             
-        case .menu(selectedIndex: _):
-            break
+//        case .menu(selectedIndex: _):
+//            break
         }
     }
     
     func handlePlayPause() {
-        if(playerState.isPlaying) {
-            playerState.isPlaying=false
-            playbackService.pause()
-        } else {
-            playerState.isPlaying=true
-            playbackService.play()
+        if case .player = currentScreen {
+            if(playerState.isPlaying) {
+                playerState.isPlaying=false
+                playbackService.pause()
+            } else {
+                playerState.isPlaying=true
+                playbackService.play()
+            }
         }
     }
     
@@ -175,11 +215,11 @@ class IpodViewModel: ObservableObject {
         playerState.progress=playbackService.currentTime()
     }
 
-    func handleMenu() {
-        if navigationStack.count > 1 {
-            withAnimation(.easeInOut(duration: 0.5)) {
-                navigationStack.removeLast()
-            }
-        }
-    }
+//    func handleMenu() {
+//        if navigationStack.count > 1 {
+//            withAnimation(.easeInOut(duration: 0.5)) {
+//                navigationStack.removeLast()
+//            }
+//        }
+//    }
 }
