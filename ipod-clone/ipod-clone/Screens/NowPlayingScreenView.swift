@@ -160,6 +160,15 @@ private struct TrackMetaData: View {
 
 private struct Details: View {
     @StateObject var audioRoute = AudioRouteModel()
+    @EnvironmentObject var vm: IpodViewModel
+    var isQueue: Bool {
+        if case .queue = vm.currentMode {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         HStack {
             Image(systemName: audioRoute.deviceIcon)
@@ -171,6 +180,20 @@ private struct Details: View {
                 .font(.system(size: 18, weight: .regular))
             
             Spacer()
+            
+            Button {
+                vm.handleShuffle()
+            } label: {
+                if(isQueue) {
+                    Image(systemName: "shuffle")
+                        .foregroundStyle(.tertiaryText)
+                        .font(.system(size: 18, weight: .regular))
+                } else {
+                    Image(systemName: "shuffle")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 18, weight: .regular))
+                }
+            }
 
         }
     }
