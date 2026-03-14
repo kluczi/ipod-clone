@@ -38,6 +38,7 @@ struct NowPlayingScreenView: View {
         ZStack {
             VStack(alignment: .leading, spacing: 16) {
                 TrackMetaData(title: track.title, artist: track.artist, album: track.album, art: track.image)
+                    .animation(.easeInOut(duration:0.2), value: vm.playerState.currentTrackFileName)
 
                 ProgressBar(progress: vm.playerState.progress, fraction: fraction, formattedProgress: formattedProgress, timeLeft: timeLeft)
                 
@@ -50,7 +51,7 @@ struct NowPlayingScreenView: View {
             Image(track.image)
                 .resizable()
                 .scaledToFill()
-                .ignoresSafeArea()
+//                .ignoresSafeArea()
                 .blur(radius: 60)
             Rectangle()
                 .fill(.black.opacity(0.18))
@@ -111,6 +112,8 @@ private struct BlendedArtwork: View {
             Image(art)
                 .resizable()
                 .scaledToFill()
+                .id(art)
+                .transition(.identity)
                 .frame(width: 164, height: 164)
                 .clipShape(Rectangle())
         }
