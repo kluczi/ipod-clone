@@ -11,22 +11,16 @@ struct IpodScreen: View {
     @EnvironmentObject var vm: IpodViewModel
 
     var body: some View {
-        ZStack {
-//            RoundedRectangle(cornerRadius: 12)
-//                .foregroundStyle(Color(.ipodScreenGlass))
-
-
-            screenContent
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.ipodScreenGlass), lineWidth: 4)
-                .aspectRatio(4/3, contentMode: .fit)
-        )
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 24)
+        screenContent
+            .frame(maxWidth: .infinity, idealHeight: 360, maxHeight: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipped()
+            .overlay {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color(.ipodScreenGlass), lineWidth: 4)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 24)
     }
 
     @ViewBuilder
