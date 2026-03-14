@@ -1,12 +1,15 @@
 # iPod Modern Clone
 
 Modern iPod-style music player built with **SwiftUI**, featuring a click wheel, library browser, and now-playing screen with animated transitions and shuffle/queue modes.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/kluczi/ipod-clone/e4b915cce39993dd6a6ceba540775a0f5f7d694c/ipod_demo_1.png" width="30%" />
+  <img src="https://raw.githubusercontent.com/kluczi/ipod-clone/e4b915cce39993dd6a6ceba540775a0f5f7d694c/ipod_demo_2.png" width="30%" />
+</div>
 
 ## Features
 
 - **iPod shell & click wheel**
   - Circular click wheel with center/select, menu, play/pause, previous/next
-  - Wheel rotation drives selection in the library
 - **Library screen**
   - List of tracks loaded from `tracks.json` in `Resources`
   - Large album artwork thumbnails
