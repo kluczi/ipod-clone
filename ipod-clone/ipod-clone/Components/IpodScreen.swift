@@ -22,7 +22,9 @@ struct IpodScreen: View {
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color(.ipodScreenGlass), lineWidth: 4)
+                .aspectRatio(4/3, contentMode: .fit)
         )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 12)
         .padding(.vertical, 24)
     }

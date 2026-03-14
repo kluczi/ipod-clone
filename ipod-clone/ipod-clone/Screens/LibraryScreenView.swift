@@ -28,7 +28,7 @@ struct LibraryScreenView: View {
                 TrackRow(track: track, isSelected: realIndex==selectedIndex)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
 }
 
