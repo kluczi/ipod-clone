@@ -10,7 +10,6 @@ Modern iPod-style music player built with **SwiftUI**, featuring a click wheel, 
 
 - **iPod shell & click wheel**
   - Circular click wheel with center/select, menu, play/pause, previous/next
-  - Wheel rotation drives selection in the library
 - **Library screen**
   - List of tracks loaded from `tracks.json` in `Resources`
   - Large album artwork thumbnails
