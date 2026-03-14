@@ -45,7 +45,7 @@ struct NowPlayingScreenView: View {
             }
         }
         .padding(16)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .background {
             Image(track.image)
                 .resizable()
@@ -54,7 +54,6 @@ struct NowPlayingScreenView: View {
                 .blur(radius: 60)
             Rectangle()
                 .fill(.black.opacity(0.18))
-                .ignoresSafeArea()
         }
     }
 }
